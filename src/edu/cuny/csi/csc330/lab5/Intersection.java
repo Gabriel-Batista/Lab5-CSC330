@@ -10,7 +10,7 @@ public class Intersection {
 	private int street; 
 
 	public Intersection() {
-		Intersection(0,0);
+		this(0,0);
 	}
 	
 	
@@ -94,6 +94,19 @@ public class Intersection {
 	public static void main(String[] args) {
 		// Implement a Testing main()   !!!!!!!!!!!!!!!!
 		// create 2 instances , populate, display, compare  ... does everything look sane??
-
+		Intersection test1 = new Intersection(0,0);
+		Intersection test2 = new Intersection(0,0);
+		
+		System.out.println(test2.toString());
+		System.out.println(test1.toString());
+		
+		System.out.println(test1.hashCode());
+		System.out.println(test2.hashCode());
+		
+		if(test1.equals(test2))
+			System.out.println("test1 and test2 are equal.");
+		
+		else
+			System.out.println("test1 and test2 are not equal.");
 	}
 }
