@@ -8,7 +8,7 @@ public class DrunkWalker {
 	
 	private Intersection startIntersection;
 	private Intersection currentIntersection;
-
+	private List<String> stepHistory;
 	
 	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  
 	// add other data members here including Collection instances that you will use to 
@@ -24,11 +24,14 @@ public class DrunkWalker {
 	 * @param street
 	 */
 	public DrunkWalker(int avenue, int street) {	
+		this.startIntersection = new Intersection(avenue, street);
 		init();
 	}
 	
 	private void init() {
-		// What should be do here to initialize an instance?? 
+		// What should be do here to initialize an instance??
+		if(this.startIntersection == null)
+			this.startIntersection = new Intersection();
 	}
 	
 	/**
@@ -58,14 +61,50 @@ public class DrunkWalker {
 	
 	
 	private void takeAStep() {
-		Direction dir = Direction.NONE.getNextRandom(); 
+		Direction dir = Direction.NORTH.getNextRandom(); 
 		
 		/** !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		 * now what do we do based on the random Direction created? 
 		 * How do we go about updating the "currentIntersection" instance to reflect the 
 		 * direction/step that was just selected? 
 		 */
-		
+		switch(dir)
+		{
+		case NORTH:
+			this.currentIntersection.incStreet();
+			break;
+			
+		case NORTHEAST:
+			this.currentIntersection.incStreet();
+			this.currentIntersection.incAvenue();
+			break;
+			
+		case EAST:
+			this.currentIntersection.incAvenue();
+			break;
+			
+		case SOUTHEAST:
+			this.currentIntersection.decStreet();
+			this.currentIntersection.incAvenue();
+			break;
+			
+		case SOUTH:
+			this.currentIntersection.decStreet();
+			break;
+			
+		case SOUTHWEST:
+			this.currentIntersection.decStreet();
+			this.currentIntersection.decAvenue();
+			break;
+			
+		case WEST:
+			this.currentIntersection.decStreet();
+			break;
+			
+		default:
+			System.out.println("The drunk fell into a interdimentional portal and was never seen again.");
+			System.exit(0);
+		}
 		
 	}
 
@@ -74,6 +113,11 @@ public class DrunkWalker {
 	 * toString() 
 	 * @return
 	 */
+	@Override
+	public String toString() {
+		return "DrunkWalker [startIntersection=" + startIntersection + ", currentIntersection=" + currentIntersection
+				+ ", stepHistory=" + stepHistory + "]";
+	}
 	
 
 
@@ -89,6 +133,7 @@ public class DrunkWalker {
 		*/
 		return  null;  
 	}
+
 
 	/**
 	 * Take N number of steps 
