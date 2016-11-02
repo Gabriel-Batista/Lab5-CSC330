@@ -56,6 +56,21 @@ public class Intersection {
 		this.street = street;
 	}
 	
+	public void incStreet() {
+		this.street++;
+	}
+	
+	public void incAvenue() {
+		this.avenue++;
+	}
+	
+	public void decStreet() {
+		this.street--;
+	}
+	
+	public void decAvenue() {
+		this.avenue--;
+	}
 	
 
 	/**
