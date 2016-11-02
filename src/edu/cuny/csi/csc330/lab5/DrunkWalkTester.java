@@ -17,10 +17,10 @@ public class DrunkWalkTester {
 	public void runTest(int steps ) { 
 		
 		
-		System.out.print("Enter the starting avenue value: ");
-		int avenue = input.nextInt();
-		System.out.print("Enter the starting street value: ");
-		int street = input.nextInt();
+		//System.out.print("Enter the starting avenue value: ");
+		int avenue = 0; //input.nextInt();
+		//System.out.print("Enter the starting street value: ");
+		int street = 0; // input.nextInt();
 		
 		//////////////////////// start test 
 		// make the Drunkard with initial position

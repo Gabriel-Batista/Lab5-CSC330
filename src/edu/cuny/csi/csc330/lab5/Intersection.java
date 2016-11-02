@@ -72,6 +72,12 @@ public class Intersection {
 		this.avenue--;
 	}
 	
+	public void copyIntersection(Intersection otherI)
+	{
+		avenue = otherI.getAvenue();
+		street = otherI.getStreet();
+	}
+	
 
 	/**
 	 * hashCode() and equals() methods 

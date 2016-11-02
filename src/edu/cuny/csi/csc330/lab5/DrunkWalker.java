@@ -8,8 +8,9 @@ public class DrunkWalker {
 	
 	private Intersection startIntersection;
 	private Intersection currentIntersection;
-	private List<String> stepHistory;
-	
+	private Map<Integer, Intersection> stepHistory = new HashMap<Integer, Intersection>();
+	private Map<Intersection, Integer> intersectionCount = new HashMap<Intersection, Integer>();
+	private Integer totalSteps = 0;
 	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  
 	// add other data members here including Collection instances that you will use to 
 	//  to track history and statistics ... 
@@ -32,6 +33,9 @@ public class DrunkWalker {
 		// What should be do here to initialize an instance??
 		if(this.startIntersection == null)
 			this.startIntersection = new Intersection();
+		
+		currentIntersection = new Intersection();	
+		currentIntersection.copyIntersection(startIntersection);
 	}
 	
 	/**
@@ -40,7 +44,6 @@ public class DrunkWalker {
 	public void step() {
 		
 		takeAStep(); 
-		
 		/**  !!!!!!!!!!!!!!!!!!!!!!!!!!!
 		 * Now, update the Collections that manage the following:
 		 * 
@@ -57,12 +60,22 @@ public class DrunkWalker {
 		 *   Intersection->existing_count+1 
 		 *   
 		 */
+		
+		//Keeps track of exactly where the drunk was at exactly what step.
+		stepHistory.put(++totalSteps, this.currentIntersection);
+		
+		//if the drunk has already been to the intersection increment value, else add it to map.
+		int count = intersectionCount.containsKey(currentIntersection) ? intersectionCount.get(currentIntersection) : 0;
+		intersectionCount.put(currentIntersection, count + 1 );
+			
+				
 	}
 	
 	
 	private void takeAStep() {
 		Direction dir = Direction.NORTH.getNextRandom(); 
 		
+		System.out.println("DIRECTION: " + dir);
 		/** !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		 * now what do we do based on the random Direction created? 
 		 * How do we go about updating the "currentIntersection" instance to reflect the 
@@ -101,6 +114,11 @@ public class DrunkWalker {
 			this.currentIntersection.decStreet();
 			break;
 			
+		case NORTHWEST:
+			this.currentIntersection.incStreet();
+			this.currentIntersection.decAvenue();
+			break;
+			
 		default:
 			System.out.println("The drunk fell into a interdimentional portal and was never seen again.");
 			System.exit(0);
@@ -126,12 +144,10 @@ public class DrunkWalker {
 	 * generate string that contains current intersection/location info 
 	 */
 	public String getLocation() {
-		// !!!!!!!!!!!!!!!!!  
-		/**
+		
 		return String.format("Current location: DrunkWalker [avenue=%d, street=%d]", 
 				currentIntersection.getAvenue(), currentIntersection.getStreet() );
-		*/
-		return  null;  
+		 
 	}
 
 
@@ -142,6 +158,9 @@ public class DrunkWalker {
 	public void fastForward(int steps ) {
 		// Considering that we already have a step() method, how would we 
 		//  implement this method?  Uhh, think reuse!  
+		
+		for(int i = 0; i < steps; i++)
+			step();
 	}
 	
 	/**
@@ -161,7 +180,11 @@ public class DrunkWalker {
 		 * 6 - Intersections visited more than once 
 		 * 
 		 */
-		
+		System.out.println("Starting Location: " + startIntersection + "\n\n"
+							+ "Current Intersection: " + currentIntersection + "\n\n"
+							+ "Distance Travelled: " + howFar() + "\n\n"
+							+ "Total Steps: " + stepHistory.size() + "\n\n"
+							+ "Unique Intersections Visited: " + intersectionCount.entrySet().size() + "\n\n");
 		
 		
 		
@@ -179,12 +202,11 @@ public class DrunkWalker {
 		avenue = x2 
 		startStreet = y1 
 		street = y2 
-	 
-		return (Math.abs(startAvenue - avenue) ) + (Math.abs(startStreet - street)); 
 		 * 
 		 */
-		
-		return 0; 
+	 
+		return (Math.abs(startIntersection.getAvenue() - currentIntersection.getAvenue()) ) + (Math.abs(startIntersection.getStreet() - currentIntersection.getStreet())); 
+
 	}
 
 
