@@ -49,8 +49,18 @@ public class DrunkWalkTester {
 		 * 
 		 * Also invoke the displayWalkDetails() on both instances.
  */
-
-
+		DrunkWalker harvey = new DrunkWalker(avenue, street);
+		
+		if(harvey.howFar() > billy.howFar())
+			System.out.println("Harvey wins the race!");
+		
+		else
+			System.out.println("Billy wins the race!");
+		
+		System.out.println("\nHarvey Stats!\n");
+		harvey.displayWalkDetails();
+		System.out.println("\nBilly stats\n");
+		billy.displayWalkDetails();
 	}
 
 	/**
